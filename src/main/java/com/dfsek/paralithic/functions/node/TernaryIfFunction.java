@@ -8,6 +8,9 @@ import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
 public class TernaryIfFunction implements NodeFunction {
+    public TernaryIfFunction() {
+    }
+
     @Override
     public @NotNull Node createNode(@NotNull List<Node> params) {
         return new TernaryIfNode(params.get(0), params.get(1), params.get(2));

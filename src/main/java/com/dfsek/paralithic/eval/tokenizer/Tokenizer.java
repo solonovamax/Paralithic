@@ -40,7 +40,7 @@ import java.util.Set;
  * will be returned as a single symbol.</li>
  * </ul>
  */
-public class Tokenizer extends Lookahead<Token> {
+public final class Tokenizer extends Lookahead<Token> {
     /*
      * Scientific notation separator (e.g. 3e2 = 3*10**2 = 300)
      */
@@ -80,7 +80,7 @@ public class Tokenizer extends Lookahead<Token> {
     /*
      * Contains the underlying input
      */
-    protected LookaheadReader input;
+    private final LookaheadReader input;
     /*
      * Decimal separator used when detecting decimal numbers
      */
@@ -216,7 +216,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return {@code true} if the current input is the start of a special id, {@code false} otherwise
      */
-    protected boolean isAtStartOfSpecialId() {
+    private boolean isAtStartOfSpecialId() {
         return specialIdStarters.contains(input.current().getValue());
     }
 
@@ -227,7 +227,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return {@code true} if the current input is the start of a numeric constant, {@code false} otherwise
      */
-    protected boolean isAtStartOfNumber() {
+    private boolean isAtStartOfNumber() {
         return input.current().isDigit()
                 || input.current().is('-') && input.next().isDigit()
                 || input.current().is('-') && input.next().is('.') && input.next(2).isDigit()
@@ -243,7 +243,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param inSymbol determines if we're already parsing a symbol or just trying to decide what the next token is
      * @return {@code true} if the current input is an opening or closing bracket
      */
-    protected boolean isAtBracket(boolean inSymbol) {
+    private boolean isAtBracket(boolean inSymbol) {
         return input.current().is(BRACKETS) || !inSymbol
                 && TREAT_SINGLE_PIPE_AS_BRACKET
                 && input.current().is('|')
@@ -258,7 +258,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @return {@code true} if the next characters of the input match the given string, {@code false}
      * otherwise
      */
-    protected boolean canConsumeThisString(String string, boolean consume) {
+    private boolean canConsumeThisString(String string, boolean consume) {
         if(string == null) {
             return false;
         }
@@ -282,7 +282,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param consume determines if the matched comment start should be consumed immediately
      * @return {@code true} if the next character(s) of the input start a line comment, {@code false} otherwise
      */
-    protected boolean isAtStartOfLineComment(boolean consume) {
+    private boolean isAtStartOfLineComment(boolean consume) {
         if(lineComment != null) {
             return canConsumeThisString(lineComment, consume);
         } else {
@@ -293,7 +293,7 @@ public class Tokenizer extends Lookahead<Token> {
     /**
      * Read everything upon (and including) the next line break
      */
-    protected void skipToEndOfLine() {
+    private void skipToEndOfLine() {
         while(!input.current().isEndOfInput() && !input.current().isNewLine()) {
             input.consume();
         }
@@ -308,7 +308,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param consume determines if the block comment starter is to be consumed if found or not
      * @return {@code true} if the next character(s) of the input start a block comment, {@code false} otherwise
      */
-    protected boolean isAtStartOfBlockComment(boolean consume) {
+    private boolean isAtStartOfBlockComment(boolean consume) {
         return canConsumeThisString(blockCommentStart, consume);
     }
 
@@ -319,14 +319,14 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return {@code true} if the next character(s) of the input end a block comment, {@code false} otherwise
      */
-    protected boolean isAtEndOfBlockComment() {
+    private boolean isAtEndOfBlockComment() {
         return canConsumeThisString(blockCommentEnd, true);
     }
 
     /**
      * Checks if we're looking at an end of block comment
      */
-    protected void skipBlockComment() {
+    private void skipBlockComment() {
         while(!input.current().isEndOfInput()) {
             if(isAtEndOfBlockComment()) {
                 return;
@@ -341,7 +341,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return the parsed string constant a Token
      */
-    protected Token fetchString() {
+    private Token fetchString() {
         char separator = input.current().getValue();
         char escapeChar = stringDelimiters.get(input.current().getValue());
         Token result = Token.create(Token.TokenType.STRING, input.current());
@@ -377,7 +377,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param stringToken the resulting string constant
      * @return {@code true} if an escape was possible, {@code false} otherwise
      */
-    protected boolean handleStringEscape(char separator, char escapeChar, Token stringToken) {
+    private boolean handleStringEscape(char separator, char escapeChar, Token stringToken) {
         if(input.current().is(separator)) {
             stringToken.addToContent(separator);
             stringToken.addToSource(input.consume());
@@ -406,7 +406,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return {@code true} if the underlying input is looking at a valid identifier starter, {@code false} otherwise
      */
-    protected boolean isAtStartOfIdentifier() {
+    private boolean isAtStartOfIdentifier() {
         return input.current().isLetter();
     }
 
@@ -415,7 +415,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return the parsed identifier as Token
      */
-    protected Token fetchId() {
+    private Token fetchId() {
         Token result = Token.create(Token.TokenType.ID, input.current());
         result.addToContent(input.consume());
         while(isIdentifierChar(input.current())) {
@@ -439,7 +439,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param idToken the identifier to check
      * @return a keyword Token if the given identifier was a keyword, the original Token otherwise
      */
-    protected Token handleKeywords(Token idToken) {
+    private Token handleKeywords(Token idToken) {
         String keyword = keywords.get(keywordsCaseSensitive ?
                 idToken.getContents().intern() :
                 idToken.getContents().toLowerCase().intern());
@@ -463,7 +463,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param current the character to check
      * @return {@code true} if the given Char is a valid identifier part, {@code false} otherwise
      */
-    protected boolean isIdentifierChar(Char current) {
+    private boolean isIdentifierChar(Char current) {
         return current.isDigit() || current.isLetter() || current.is('_');
     }
 
@@ -472,7 +472,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return the parsed special id as Token
      */
-    protected Token fetchSpecialId() {
+    private Token fetchSpecialId() {
         Token result = Token.create(Token.TokenType.SPECIAL_ID, input.current());
         result.addToTrigger(input.consume());
         while(isIdentifierChar(input.current())) {
@@ -489,7 +489,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return the parsed symbol as Token
      */
-    protected Token fetchSymbol() {
+    private Token fetchSymbol() {
         Token result = Token.create(Token.TokenType.SYMBOL, input.current());
         result.addToTrigger(input.consume());
         if(result.isSymbol("*") && input.current().is('*')
@@ -509,7 +509,7 @@ public class Tokenizer extends Lookahead<Token> {
      * @param ch the character to check
      * @return {@code true} if the given character is a valid symbol character, {@code false} otherwise
      */
-    protected boolean isSymbolCharacter(Char ch) {
+    private boolean isSymbolCharacter(Char ch) {
         if(ch.isEndOfInput() || ch.isDigit() || ch.isLetter() || ch.isWhitespace()) {
             return false;
         }
@@ -532,7 +532,7 @@ public class Tokenizer extends Lookahead<Token> {
      *
      * @return the parsed number as Token
      */
-    protected Token fetchNumber() {
+    private Token fetchNumber() {
         Token result = Token.create(Token.TokenType.INTEGER, input.current());
         result.addToContent(input.consume());
         while(input.current().isDigit()

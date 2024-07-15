@@ -19,7 +19,7 @@ import java.io.Reader;
  * Helps to read characters from a {@link Reader} one after another. Using {@code next}, upcoming characters can
  * be inspected without consuming (removing) the current one.
  */
-public class LookaheadReader extends Lookahead<Char> {
+public final class LookaheadReader extends Lookahead<Char> {
 
     private final Reader input;
     private int line = 1;

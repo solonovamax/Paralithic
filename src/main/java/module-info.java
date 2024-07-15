@@ -1,6 +1,6 @@
 module com.dfsek.paralithic {
-    requires org.jetbrains.annotations;
-    requires org.objectweb.asm;
+    requires transitive org.jetbrains.annotations;
+    requires transitive org.objectweb.asm;
 
     exports com.dfsek.paralithic;
     exports com.dfsek.paralithic.eval.parser;
