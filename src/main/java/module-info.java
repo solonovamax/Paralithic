@@ -1,6 +1,7 @@
 module com.dfsek.paralithic {
     requires transitive org.jetbrains.annotations;
     requires transitive org.objectweb.asm;
+    requires java.logging;
 
     exports com.dfsek.paralithic;
     exports com.dfsek.paralithic.eval.parser;
