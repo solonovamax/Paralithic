@@ -1,15 +1,18 @@
 package com.dfsek.paralithic.node.unary;
 
-import com.dfsek.paralithic.functions.natives.NativeMath;
-import com.dfsek.paralithic.node.Node;
 import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.DCMPG;
+import static org.objectweb.asm.Opcodes.DCONST_0;
+import static org.objectweb.asm.Opcodes.DNEG;
+import static org.objectweb.asm.Opcodes.DUP2;
+import static org.objectweb.asm.Opcodes.IFGE;
 
-public class AbsoluteValueNode extends UnaryNode {
+public final class AbsoluteValueNode extends UnaryNode {
     public AbsoluteValueNode(Node op) {
         super(op);
     }

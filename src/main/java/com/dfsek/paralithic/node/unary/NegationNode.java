@@ -1,13 +1,13 @@
 package com.dfsek.paralithic.node.unary;
 
-import com.dfsek.paralithic.node.Node;
 import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.DNEG;
 
-public class NegationNode extends UnaryNode {
+public final class NegationNode extends UnaryNode {
     public NegationNode(Node op) {
         super(op);
     }

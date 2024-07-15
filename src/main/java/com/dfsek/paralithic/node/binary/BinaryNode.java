@@ -1,11 +1,21 @@
 package com.dfsek.paralithic.node.binary;
 
-import com.dfsek.paralithic.node.*;
+import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
+import com.dfsek.paralithic.node.NodeUtils;
+import com.dfsek.paralithic.node.Simplifiable;
+import com.dfsek.paralithic.node.Statefulness;
+import com.dfsek.paralithic.node.binary.booleans.AndNode;
+import com.dfsek.paralithic.node.binary.booleans.ComparisonNode;
+import com.dfsek.paralithic.node.binary.booleans.OrNode;
+import com.dfsek.paralithic.node.binary.number.DivisionNode;
+import com.dfsek.paralithic.node.binary.number.ModuloNode;
+import com.dfsek.paralithic.node.binary.number.SubtractionNode;
 import com.dfsek.paralithic.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 
-public abstract class BinaryNode implements Simplifiable {
+public abstract sealed class BinaryNode implements Simplifiable permits CommutativeBinaryNode, AndNode, ComparisonNode, OrNode, DivisionNode, ModuloNode, SubtractionNode {
     protected Node left;
     protected Node right;
 
@@ -13,7 +23,7 @@ public abstract class BinaryNode implements Simplifiable {
 
     private boolean sealed = false;
 
-    public BinaryNode(Node left, Node right) {
+    protected BinaryNode(Node left, Node right) {
         this.left = left;
         this.right = right;
     }

@@ -1,9 +1,10 @@
 package com.dfsek.paralithic.node;
 
+import com.dfsek.paralithic.node.special.InvocationVariableNode;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 
-public interface Node {
+public sealed interface Node permits Simplifiable, InvocationVariableNode {
     /**
      * Apply this node to a {@link MethodVisitor}.
      * <p>
