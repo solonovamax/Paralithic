@@ -1,15 +1,15 @@
 package com.dfsek.paralithic.node.binary.number;
 
+import com.dfsek.paralithic.node.Constant;
 import com.dfsek.paralithic.node.Node;
 import com.dfsek.paralithic.node.binary.BinaryNode;
 import com.dfsek.paralithic.node.binary.CommutativeBinaryNode;
-import com.dfsek.paralithic.node.Constant;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.DMUL;
 
-public class MultiplicationNode extends CommutativeBinaryNode {
+public final class MultiplicationNode extends CommutativeBinaryNode {
     public MultiplicationNode(Node left, Node right) {
         super(left, right);
     }

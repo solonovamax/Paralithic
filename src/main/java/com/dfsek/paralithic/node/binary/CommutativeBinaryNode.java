@@ -1,15 +1,17 @@
 package com.dfsek.paralithic.node.binary;
 
+import com.dfsek.paralithic.node.Constant;
 import com.dfsek.paralithic.node.Node;
 import com.dfsek.paralithic.node.NodeUtils;
-import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.binary.number.AdditionNode;
+import com.dfsek.paralithic.node.binary.number.MultiplicationNode;
 import org.jetbrains.annotations.NotNull;
 
 /**
  * Commutative binary operation. Enables advanced merging if nesting is detected.
  */
-public abstract class CommutativeBinaryNode extends BinaryNode {
-    public CommutativeBinaryNode(Node left, Node right) {
+public abstract sealed class CommutativeBinaryNode extends BinaryNode permits AdditionNode, MultiplicationNode {
+    protected CommutativeBinaryNode(Node left, Node right) {
         super(left, right);
     }
 

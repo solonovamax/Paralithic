@@ -6,9 +6,10 @@ import com.dfsek.paralithic.node.Statefulness;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.DALOAD;
 
-public class InvocationVariableNode implements Node {
+public final class InvocationVariableNode implements Node {
     private final int index;
 
     public InvocationVariableNode(int index) {
@@ -17,7 +18,7 @@ public class InvocationVariableNode implements Node {
 
     @Override
     public String toString() {
-        return "LOCAL_" + index + "";
+        return "LOCAL_" + index;
     }
 
     @Override

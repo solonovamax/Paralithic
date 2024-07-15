@@ -4,32 +4,12 @@ import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
 import org.objectweb.asm.Opcodes;
 
-public class Constant implements Simplifiable {
+public sealed class Constant implements Simplifiable {
     protected final double value;
 
-    public static final Constant DCONST_0 = new Constant(0) {
-        @Override
-        public void apply(@NotNull MethodVisitor visitor, String generatedImplementationName) {
-            visitor.visitInsn(Opcodes.DCONST_0);
-        }
+    public static final Constant DCONST_0 = new DoubleConstantZero();
 
-        @Override
-        public @NotNull Node simplify() {
-            return this;
-        }
-    };
-
-    public static final Constant DCONST_1 = new Constant(1) {
-        @Override
-        public void apply(@NotNull MethodVisitor visitor, String generatedImplementationName) {
-            visitor.visitInsn(Opcodes.DCONST_1);
-        }
-
-        @Override
-        public @NotNull Node simplify() {
-            return this;
-        }
-    };
+    public static final Constant DCONST_1 = new DoubleConstantOne();
 
     private Constant(double value) {
         this.value = value;
@@ -67,5 +47,37 @@ public class Constant implements Simplifiable {
         if(value == 0) return DCONST_0;
         if(value == 1) return DCONST_1;
         return this;
+    }
+
+    private static final class DoubleConstantZero extends Constant {
+        private DoubleConstantZero() {
+            super(0);
+        }
+
+        @Override
+        public void apply(@NotNull MethodVisitor visitor, String generatedImplementationName) {
+            visitor.visitInsn(Opcodes.DCONST_0);
+        }
+
+        @Override
+        public @NotNull Node simplify() {
+            return this;
+        }
+    }
+
+    private static final class DoubleConstantOne extends Constant {
+        private DoubleConstantOne() {
+            super(1);
+        }
+
+        @Override
+        public void apply(@NotNull MethodVisitor visitor, String generatedImplementationName) {
+            visitor.visitInsn(Opcodes.DCONST_1);
+        }
+
+        @Override
+        public @NotNull Node simplify() {
+            return this;
+        }
     }
 }

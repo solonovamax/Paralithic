@@ -1,14 +1,21 @@
 package com.dfsek.paralithic.node.special;
 
-import com.dfsek.paralithic.node.*;
+import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
+import com.dfsek.paralithic.node.NodeUtils;
+import com.dfsek.paralithic.node.Simplifiable;
+import com.dfsek.paralithic.node.Statefulness;
 import com.dfsek.paralithic.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.MethodVisitor;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.DCMPG;
+import static org.objectweb.asm.Opcodes.DCONST_0;
+import static org.objectweb.asm.Opcodes.GOTO;
+import static org.objectweb.asm.Opcodes.IFEQ;
 
-public class TernaryIfNode implements Simplifiable {
+public final class TernaryIfNode implements Simplifiable {
     private Node predicate;
     private Node left;
     private Node right;

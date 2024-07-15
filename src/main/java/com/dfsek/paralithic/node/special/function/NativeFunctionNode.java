@@ -1,7 +1,11 @@
 package com.dfsek.paralithic.node.special.function;
 
 import com.dfsek.paralithic.functions.natives.NativeFunction;
-import com.dfsek.paralithic.node.*;
+import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
+import com.dfsek.paralithic.node.NodeUtils;
+import com.dfsek.paralithic.node.Simplifiable;
+import com.dfsek.paralithic.node.Statefulness;
 import com.dfsek.paralithic.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
@@ -12,9 +16,12 @@ import java.lang.reflect.Parameter;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.F2D;
+import static org.objectweb.asm.Opcodes.I2D;
+import static org.objectweb.asm.Opcodes.INVOKESTATIC;
+import static org.objectweb.asm.Opcodes.L2D;
 
-public class NativeFunctionNode implements Simplifiable {
+public final class NativeFunctionNode implements Simplifiable {
     private final NativeFunction function;
     private final List<Node> args;
 

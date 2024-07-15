@@ -1,7 +1,11 @@
 package com.dfsek.paralithic.node.special.function;
 
 import com.dfsek.paralithic.functions.dynamic.DynamicFunction;
-import com.dfsek.paralithic.node.*;
+import com.dfsek.paralithic.node.Constant;
+import com.dfsek.paralithic.node.Node;
+import com.dfsek.paralithic.node.NodeUtils;
+import com.dfsek.paralithic.node.Simplifiable;
+import com.dfsek.paralithic.node.Statefulness;
 import com.dfsek.paralithic.util.Lazy;
 import org.jetbrains.annotations.NotNull;
 import org.objectweb.asm.MethodVisitor;
@@ -11,9 +15,15 @@ import java.util.stream.Collectors;
 
 import static com.dfsek.paralithic.eval.ExpressionBuilder.CONTEXT_CLASS_NAME;
 import static com.dfsek.paralithic.eval.ExpressionBuilder.DYNAMIC_FUNCTION_CLASS_NAME;
-import static org.objectweb.asm.Opcodes.*;
+import static org.objectweb.asm.Opcodes.ALOAD;
+import static org.objectweb.asm.Opcodes.DASTORE;
+import static org.objectweb.asm.Opcodes.DUP;
+import static org.objectweb.asm.Opcodes.GETFIELD;
+import static org.objectweb.asm.Opcodes.INVOKEINTERFACE;
+import static org.objectweb.asm.Opcodes.NEWARRAY;
+import static org.objectweb.asm.Opcodes.T_DOUBLE;
 
-public class FunctionNode implements Simplifiable {
+public final class FunctionNode implements Simplifiable {
     private List<Node> args;
     private DynamicFunction function;
     private final String fName;

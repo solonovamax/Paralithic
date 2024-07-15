@@ -1,13 +1,13 @@
 package com.dfsek.paralithic.node.binary.number;
 
+import com.dfsek.paralithic.node.Constant;
 import com.dfsek.paralithic.node.Node;
 import com.dfsek.paralithic.node.binary.BinaryNode;
-import com.dfsek.paralithic.node.Constant;
 import org.objectweb.asm.MethodVisitor;
 
 import static org.objectweb.asm.Opcodes.DDIV;
 
-public class DivisionNode extends BinaryNode {
+public final class DivisionNode extends BinaryNode {
     public DivisionNode(Node left, Node right) {
         super(left, right);
     }
