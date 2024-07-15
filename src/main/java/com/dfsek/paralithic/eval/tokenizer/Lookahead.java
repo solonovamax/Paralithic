@@ -20,7 +20,10 @@ import java.util.List;
  *
  * @param <T> the type of the elements kept in the stream
  */
-public abstract class Lookahead<T> {
+public abstract sealed class Lookahead<T> permits LookaheadReader, Tokenizer {
+    protected Lookahead() {
+    }
+
     /**
      * Internal buffer containing items which where already created due to lookaheads.
      */

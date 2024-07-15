@@ -7,7 +7,7 @@ import com.dfsek.paralithic.node.special.function.NativeFunctionNode;
 import java.util.List;
 import java.util.Optional;
 
-public class NativeMath {
+public final class NativeMath {
     private static final Class<?> MATH = Math.class;
 
     public static NativeFunction MAX = (NativeMathFunction) () -> MATH.getMethod("max", double.class, double.class);
@@ -58,6 +58,9 @@ public class NativeMath {
 
     public static NativeFunction INT_POW = (NativeMathFunction) () -> NativeMath.class.getMethod("intPow", double.class, double.class);
     public static NativeFunction FMA = (NativeMathFunction) () -> MATH.getMethod("fma", double.class, double.class, double.class);
+
+    private NativeMath() {
+    }
 
 
     public static double sigmoid(double a, double b) {

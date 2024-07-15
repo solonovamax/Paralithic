@@ -1,9 +1,20 @@
 package com.dfsek.paralithic.node;
 
 import org.objectweb.asm.MethodVisitor;
-import static org.objectweb.asm.Opcodes.*;
 
-public class NodeUtils {
+import static org.objectweb.asm.Opcodes.ICONST_0;
+import static org.objectweb.asm.Opcodes.ICONST_1;
+import static org.objectweb.asm.Opcodes.ICONST_2;
+import static org.objectweb.asm.Opcodes.ICONST_3;
+import static org.objectweb.asm.Opcodes.ICONST_4;
+import static org.objectweb.asm.Opcodes.ICONST_5;
+import static org.objectweb.asm.Opcodes.ICONST_M1;
+import static org.objectweb.asm.Opcodes.SIPUSH;
+
+public final class NodeUtils {
+    private NodeUtils() {
+    }
+
     public static Node simplify(Node in) {
         if(in instanceof Simplifiable) {
             return ((Simplifiable) in).simplify();
