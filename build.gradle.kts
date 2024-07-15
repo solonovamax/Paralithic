@@ -9,7 +9,7 @@ plugins {
     alias(libs.plugins.jmh)
 }
 
-val versionObj = Version("0", "8", "0", false)
+val versionObj = Version("0", "8", "0", branch = "fma-merged-dev", preRelease = false)
 
 nyx {
     info {
@@ -51,10 +51,12 @@ nyx {
 
         repositories {
             maven("https://repo.codemc.io/repository/maven-releases/") {
+                name = "CodeMC"
                 credentials(PasswordCredentials::class)
             }
 
             maven("https://maven.solo-studios.ca/releases/") {
+                name = "SoloStudios"
                 credentials(PasswordCredentials::class)
                 authentication { // publishing doesn't work without this for some reason
                     create<BasicAuthentication>("basic")
@@ -89,13 +91,22 @@ tasks {
  * Version class that does version stuff.
  */
 @Suppress("MemberVisibilityCanBePrivate")
-class Version(val major: String, val minor: String, val revision: String, val preRelease: Boolean = false) {
+class Version(val major: String, val minor: String, val revision: String, val branch: String? = null, val preRelease: Boolean = false) {
 
     override fun toString(): String {
-        return if (!preRelease)
-            "$major.$minor.$revision"
-        else // Only use git hash if it's a prerelease.
-            "$major.$minor.$revision+${getGitHash()}"
+        return buildString {
+            append(major)
+            append(".")
+            append(minor)
+            append(".")
+            append(revision)
+
+            if (branch != null)
+                append("-").append(branch)
+
+            if (preRelease)
+                append("+").append(getGitHash())
+        }
     }
 }
 
