@@ -14,7 +14,7 @@ val versionObj = Version("0", "8", "0", branch = "fma-merged-dev", preRelease = 
 nyx {
     info {
         name = "Paralithic"
-        group = "com.dfsek"
+        group = "gay.solonovamax"
         module = "paralithic"
         version = "$versionObj"
         description = """
@@ -24,7 +24,7 @@ nyx {
         organizationName = "Polyhedral Development"
         organizationUrl = "https://github.com/PolyhedralDev/"
 
-        repository.fromGithub("PolyhedralDev", "Paralithic")
+        repository.fromGithub("solonovamax", "Paralithic")
         license.useMIT()
     }
 
